@@ -5,7 +5,7 @@ import os
 
 DB_PATH = "compdb.db"
 
-def get_roster_details(row_limit: int = 100):
+def get_roster_details(row_limit: int = 10000):
     """
     Fetches the roster_details table from the compdb.db database.
     
@@ -28,7 +28,7 @@ with gr.Blocks(title="Company Roster Explorer") as demo:
     gr.Markdown("This application exposes the `roster_details` table from `compdb.db` also available as an MCP tool.")
     
     with gr.Row():
-        limit_input = gr.Number(value=100, label="Row Limit", precision=0)
+        limit_input = gr.Number(value=10000, label="Row Limit", precision=0)
         fetch_btn = gr.Button("Fetch Roster Data", variant="primary")
     
     output_table = gr.Dataframe(label="Roster Details")
