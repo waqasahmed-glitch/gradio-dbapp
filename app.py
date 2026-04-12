@@ -43,4 +43,5 @@ if __name__ == "__main__":
     # Launching with mcp_server=True exposes the get_roster_details function as an MCP tool
     print("Launching Gradio app with MCP server enabled...")
     #demo.launch(mcp_server=True, server_name="0.0.0.0", server_port=7860)
-    demo.launch(mcp_server=True,share=True, server_port=7860)
+    //demo.launch(mcp_server=True,share=True, server_port=7860)
+    demo.launch(mcp_server=True, server_name="0.0.0.0", server_port=7860)
