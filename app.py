@@ -42,5 +42,6 @@ with gr.Blocks(title="Company Roster Explorer") as demo:
 if __name__ == "__main__":
     # Launching with mcp_server=True exposes the get_roster_details function as an MCP tool
     print("Launching Gradio app with MCP server enabled...")
-    demo.launch(auth=("admin", "mcp@wa_pass_123"), mcp_server=True, server_name="0.0.0.0", server_port=7860)  # for Render deployment
+    demo.launch(mcp_server=True, server_name="0.0.0.0", server_port=7860)  # for Render deployment
+    #demo.launch(auth=("admin", "mcp@wa_pass_123"), mcp_server=True, server_name="0.0.0.0", server_port=7860)  # for Render deployment
     #demo.launch(auth=("admin", "mcp@wa_pass_123"),mcp_server=True)  # for local deployment
