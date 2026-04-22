@@ -22,19 +22,36 @@ def get_roster_details(row_limit: int = 10000):
     except Exception as e:
         return f"Error: {str(e)}"
 
+def get_patient_case_summaries(row_limit: int = 10000):
+    """
+    Fetches the patient_case_summaries table from the compdb.db database.
+    
+    Args:
+        row_limit: The maximum number of rows to return (default is 10000).
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        # We fetch only a limited number of rows by default to avoid large payloads
+        query = f"SELECT * FROM patients_case_summeries LIMIT {row_limit}"
+        df = pd.read_sql_query(query, conn)
+        conn.close()
+        return df
+    except Exception as e:
+        return f"Error: {str(e)}"
+
 # Create Gradio interface
-with gr.Blocks(title="Company Roster Explorer") as demo:
-    gr.Markdown("# 🏢 Company Roster Explorer")
-    gr.Markdown("This application uses `roster_details`. Available as an MCP tool.")
+with gr.Blocks(title="Explorer") as demo:
+    gr.Markdown("# 🏢 Explorer")
+    #gr.Markdown("This application uses `roster_details`. Available as an MCP tool.")
     
     with gr.Row():
         limit_input = gr.Number(value=10000, label="Row Limit", precision=0)
-        fetch_btn = gr.Button("Fetch Roster Data", variant="primary")
+        fetch_btn = gr.Button("Fetch Data", variant="primary")
     
-    output_table = gr.Dataframe(label="Roster Details")
+    output_table = gr.Dataframe(label="Data Details")
     
     fetch_btn.click(
-        fn=get_roster_details,
+        fn=get_patient_case_summaries,
         inputs=[limit_input],
         outputs=[output_table]
     )
@@ -42,5 +59,7 @@ with gr.Blocks(title="Company Roster Explorer") as demo:
 if __name__ == "__main__":
     # Launching with mcp_server=True exposes the get_roster_details function as an MCP tool
     print("Launching Gradio app with MCP server enabled...")
-    demo.launch(auth=("admin", "mcp@wa_pass_123"), mcp_server=True, server_name="0.0.0.0", server_port=7860)  # for Render deployment
+    #demo.launch(auth=("admin", "mcp@wa_pass_123"), mcp_server=True, server_name="0.0.0.0", server_port=7860)  # for Render deployment
+    #demo.launch(mcp_server=True, server_name="0.0.0.0", server_port=7860)  # w/o auth for Render deployment
     #demo.launch(auth=("admin", "mcp@wa_pass_123"),mcp_server=True)  # for local deployment
+    demo.launch(mcp_server=True)  # for local deployment
